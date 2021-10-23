@@ -11,6 +11,13 @@ def main():
     ToggleKeyLights()
 
 
+def AdjustBrightness(increment):
+    keylight = GetKeyLightStatus();
+    for light in keylight["lights"]:
+        light["brightness"] = max(min(light["brightness"] + increment, 100), 0)
+    SetKeyLightStatus(keylight);
+
+
 def RotateTemperature():
     keylight = GetKeyLightStatus();
 
@@ -19,7 +26,6 @@ def RotateTemperature():
             light["temperature"] = i
         SetKeyLightStatus(keylight);
         print(f"{i}: {GetKeyLightStatus()}")
-    
 
 
 def ToggleKeyLights():
