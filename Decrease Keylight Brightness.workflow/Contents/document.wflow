@@ -60,7 +60,10 @@
 				<dict>
 					<key>COMMAND_STRING</key>
 					<string>cd ~/private/programming/python/key-light;
-python3 -c 'import keylight; keylight.AdjustBrightness(increment=-5)'</string>
+python3 -c \
+'import keylight
+for url in keylight.KEYLIGHT_URLS:
+  keylight.AdjustBrightness(increment=-5, keylight_url=url)'</string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
 					<key>inputMethod</key>

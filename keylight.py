@@ -5,6 +5,7 @@ import json
 
 KEYLIGHT_LEFT_URL = "http://key-light-left.local:9123/elgato/lights"
 KEYLIGHT_RIGHT_URL = "http://key-light-right.local:9123/elgato/lights"
+KEYLIGHT_URLS = [KEYLIGHT_LEFT_URL, KEYLIGHT_RIGHT_URL]
 KEYLIGHT_MIN_TEMPERATURE = 143
 KEYLIGHT_MAX_TEMPERATURE = 344
 
@@ -14,19 +15,19 @@ def main():
 
 
 def AdjustBrightness(increment, keylight_url=KEYLIGHT_LEFT_URL):
-    keylight = GetKeyLightStatus();
+    keylight = GetKeyLightStatus(keylight_url);
     for light in keylight["lights"]:
         light["brightness"] = max(min(light["brightness"] + increment, 100), 0)
-    SetKeyLightStatus(keylight);
+    SetKeyLightStatus(keylight, keylight_url);
 
 
 def RotateTemperature(keylight_url=KEYLIGHT_LEFT_URL):
-    keylight = GetKeyLightStatus();
+    keylight = GetKeyLightStatus(keylight_url);
 
     for i in range(KEYLIGHT_MIN_TEMPERATURE, KEYLIGHT_MAX_TEMPERATURE, 1):
         for light in keylight["lights"]:
             light["temperature"] = i
-        SetKeyLightStatus(keylight);
+        SetKeyLightStatus(keylight, keylight_url);
         print(f"{i}: {GetKeyLightStatus()}")
 
 
